@@ -1,14 +1,40 @@
+import controllers.MaquinaController;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Set;
+import java.util.Map;
+import java.util.Queue;
 import java.util.Stack;
-
-import controllers.MaquinaController;
+import java.util.TreeMap;
+import java.util.TreeSet;
 import models.Maquina;
 
 public class App {
     public static void main(String[] args) throws Exception {
         List<Maquina> maquinas = crearMaquinas();
+        MaquinaController controller = new MaquinaController();
+
+    
+        System.out.println("Máquinas originales:");
+        maquinas.forEach(maquina -> System.out.println(maquina));
+
+        Stack<Maquina> pilaFiltrada = controller.filtrarPorSubred(maquinas, 100);
+        System.out.println("\nMáquinas filtradas por subred > 100:");
+        pilaFiltrada.forEach(maquina -> System.out.println(maquina));
+
+        TreeSet<Maquina> maquinasOrdenadas = controller.ordenarPorSubred(pilaFiltrada);
+        System.out.println("\nMáquinas ordenadas por subred DESC y nombre ASC:");
+        maquinasOrdenadas.forEach(maquina -> System.out.println(maquina));
+
+        TreeMap<Integer, Queue<Maquina>> gruposPorRiesgo = controller.agruparPorRiesgo(maquinas);
+        System.out.println("\nMáquinas agrupadas por riesgo:");
+        for (Map.Entry<Integer, Queue<Maquina>> entry : gruposPorRiesgo.entrySet()) {
+            System.out.println("Riesgo " + entry.getKey() + ":");
+            entry.getValue().forEach(maquina -> System.out.println(maquina));
+        }
+
+        Stack<Maquina> grupoExplotado = controller.explotarGrupo(gruposPorRiesgo);
+        System.out.println("\nMáquinas del grupo más numeroso con mayor riesgo (LIFO):");
+        grupoExplotado.forEach(maquina -> System.out.println(maquina));
 
     }
 
@@ -65,7 +91,7 @@ public class App {
                 new Maquina("Nodo7", "23.248.75.5", Arrays.asList(18, 28, 10, 27, 29)),
                 new Maquina("Nodo6", "169.238.150.174", Arrays.asList(6, 14, 3)),
                 new Maquina("DB13", "71.248.50.86", Arrays.asList(17, 11, 12)));
-        return maquinas;
 
+            return maquinas;
     }
 }
