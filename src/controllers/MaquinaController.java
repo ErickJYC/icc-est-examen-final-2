@@ -64,6 +64,5 @@ public class MaquinaController {
         }
     }
     return resultado;
-}
-
+    }
 }

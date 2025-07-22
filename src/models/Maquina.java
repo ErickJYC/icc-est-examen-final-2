@@ -26,7 +26,6 @@ public class Maquina {
     public List<Integer> getCodigos() {
         return codigos;
     }
-
     
     public int getSubred() {
         String[] partes = ip.split("\\.");
@@ -39,7 +38,6 @@ public class Maquina {
         long caracteresUnicos = nombre.replace(" ", "").chars().distinct().count();
         return (int) (sumaCodigos * caracteresUnicos);
     }
-
     @Override
     public String toString() {
         return nombre + " — " + ip + " (subred: " + getSubred() + ", riesgo: " + getRiesgo() + ")";
